@@ -1,5 +1,31 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+import { renderMarkdoc } from "../lib/render-markdoc";
+
+// Read the Dailies entries straight from the files in the repo.
+// This runs at build time on Netlify (a blessed place for the Reader API), so
+// the public Dailies page stays fully static. When you save an edit in
+// /keystatic, Keystatic commits to the repo, Netlify rebuilds, and this reruns.
+const reader = createReader(process.cwd(), keystaticConfig);
+
+const raw = await reader.collections.dailies.all();
+
+// Resolve each Markdoc body to HTML and sort by entryNumber ascending
+// (001 before 002), preserving the order the page shipped with.
+const entries = (
+  await Promise.all(
+    raw.map(async ({ slug, entry }) => ({
+      slug,
+      title: entry.title,
+      entryNumber: entry.entryNumber,
+      location: entry.location,
+      dateLine: entry.dateLine,
+      bodyHtml: renderMarkdoc(await entry.body()),
+    }))
+  )
+).sort((a, b) => a.entryNumber.localeCompare(b.entryNumber));
 ---
 
 <BaseLayout
@@ -27,61 +53,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </p>
     </div>
 
-    <!-- Entry 001 — waiting for the first small-moment piece -->
-    <article class="dailies-entry">
-      <div class="dailies-entry-header">
-        <div class="dailies-entry-meta">
-          <span class="number">Entry · 001</span>
-          <span>Chicago</span>
-          <span>Coming Soon</span>
+    {entries.map((entry) => (
+      <article class="dailies-entry">
+        <div class="dailies-entry-header">
+          <div class="dailies-entry-meta">
+            <span class="number">Entry · {entry.entryNumber}</span>
+            <span>{entry.location}</span>
+            <span>{entry.dateLine}</span>
+          </div>
         </div>
-      </div>
-      <h2 class="dailies-entry-title">
-        First <em>entry</em> — in progress.
-      </h2>
-      <div class="dailies-entry-body">
-        <p style="font-family: var(--font-display); font-style: italic; color: var(--ink-mid);">
-          A small, specific moment from the week. Posting soon. The manifesto came first, the small things come next.
-        </p>
-      </div>
-    </article>
-
-    <!-- Entry 002 — Hood New Wave -->
-    <article class="dailies-entry">
-      <div class="dailies-entry-header">
-        <div class="dailies-entry-meta">
-          <span class="number">Entry · 002</span>
-          <span>Chicago</span>
-          <span>April 2026</span>
-        </div>
-      </div>
-      <h2 class="dailies-entry-title">
-        On <em>Hood New Wave</em>.
-      </h2>
-      <div class="dailies-entry-body">
-        <p>I was twenty-two the first time I saw <em>In the Mood for Love</em>. I'd just begun studying film and still, I knew I was watching something extraordinary. I remember thinking, very clearly, very quietly, this is the kind of attention I want to give a hallway on the south side.</p>
-
-        <p>That is the instinct Hood New Wave is built out of.</p>
-
-        <p>Hood New Wave is a cinematic language for telling Black American hood stories at the full scale of the art form. It takes its cue from the neorealism of the Italian postwar movement and from the LA Rebellion, filmmakers who worked with real locations and long takes because the reality of ordinary lives deserved that seriousness of frame. It also takes its cue from the Drill-era music videos out of Chicago. The scrappy work that put its lens on people and places the culture had written off, and that treated those people and places with the subjective intensity they actually have.</p>
-
-        <p>Neorealism on its own is observational. Society as it is. Expressionism is interior. The world as the character feels it. Hood New Wave is what happens when you refuse to choose. The film is simultaneously documentary-faithful to the block and psychologically faithful to the person standing on it. A film that is purely observational is not a Hood New Wave film. A film that is purely interior and stylized is not either. The tension between the two is the signature. The tension is also Black American. Realness in expression, maximalism and restraint in conversation, Hood New Wave inherits from a culture that holds these things together.</p>
-
-        <p>Hood New Wave also inherits neorealism's national focus. Italian neorealism took as its subject the day-to-day reality of a country traumatized by political upheaval and war. Hood New Wave takes as its subject the day-to-day reality of a people shaped by racial, social and political oppression. Hoods don't exist without being created. The national focus is how Hood New Wave honors that fact. Place is a character. Every hood the camera visits is met as a specific, created, living place, not a generic backdrop. Chicago is a character. Detroit is a character. St. Louis is a character. Memphis. Oakland. Little Rock. Philadelphia. Compton. Every hood we enter enters the frame on its own terms.</p>
-
-        <p>The craft commitments that follow from this are specific. Mise-en-scène composed with the care of a Truffaut frame. Writing that reflects the unflinching realness of a block the camera is standing on. Performances delivered at the full level of the craft. The craft is reaching for maximalism, because Black American culture is maximalist, and the work should look and sound like what it is about. The medium is part of the argument: film stock, not digital. 16mm where possible. The grain matters. The physicality of the image matters. Shooting on film is a commitment to the depth and unpredictability the story requires.</p>
-
-        <p>Hood New Wave is D'Angelo and Beyoncé and Chief Keef and Kendrick Lamar. It is Devin Allen and Gordon Parks and Dawoud Bey. It is Nicole Holofcener, Barry Jenkins and Charles Burnett, it's Mike Nichols, Elia Kazan and Jean-Luc Godard. The list is not mixed to be provocative. The list is mixed because the aesthetic is already mixed. Black cultural realness and classical cinematic craft are not separate traditions in the places these films are about. They exist side by side inside the same block, the same house, the same afternoon.</p>
-
-        <p>My first feature, <em>The Caterpillar and The Butterfly</em>, is the first Hood New Wave film. I started with Chicago because Chicago is where I'm from, and because the Black Midwest is the part of the country most consistently left out of the story of Black America. The work will keep going from there.</p>
-
-        <p>Hood New Wave is not a genre. It is not a visual style that can be applied as a filter. It is a set of commitments: to the medium, to the subject, to the audience, to the tradition. A film is a Hood New Wave film because of what it holds itself accountable to, not because of what it looks like in stills. This is a formal commitment before it is a political one.</p>
-
-        <p>The people who live inside these stories deserve high art they can actually watch. The tradition those stories belong to deserves the full force of the art form.</p>
-
-        <p><em>That is what the work is for.</em></p>
-      </div>
-    </article>
+        <h2 class="dailies-entry-title">{entry.title}</h2>
+        <div class="dailies-entry-body" set:html={entry.bodyHtml} />
+      </article>
+    ))}
 
   </section>
 </main>
