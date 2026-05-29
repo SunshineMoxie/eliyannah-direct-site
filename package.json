@@ -1,0 +1,17 @@
+{
+  "name": "eliyannah-direct-site",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "The personal site of Eliyannah Amirah Yisrael. A Sunshine Moxie Production under The Forest of God's Answers.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/netlify": "^6.0.0",
+    "astro": "^5.0.0"
+  }
+}

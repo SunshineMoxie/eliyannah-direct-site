@@ -1,0 +1,142 @@
+---
+// Base layout for every page.
+// Props: title, description, pageSlug, pageNumber
+export interface Props {
+  title: string;
+  description?: string;
+  pageSlug: string;
+  pageNumber: number;
+}
+
+const {
+  title,
+  description = "The working site of Eliyannah Amirah Yisrael. Writer, director. A Sunshine Moxie Production under The Forest of God's Answers. Chicago / Los Angeles.",
+  pageSlug,
+  pageNumber,
+} = Astro.props;
+
+import "../styles/global.css";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title}</title>
+<meta name="description" content={description}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-page={pageSlug}>
+
+<header class="sheet-header">
+  <div class="sheet-header-left">
+    <button class="mobile-menu-toggle" id="menuToggle" aria-label="Open scene list">MENU</button>
+    <span><span class="label">Prod:</span> Eliyannah A. Yisrael</span>
+    <span><span class="label">Date:</span> <span id="todayDate">—</span></span>
+    <span><span class="label">Day:</span> Day 1 of ∞</span>
+  </div>
+  <div class="sheet-header-center">
+    A Sunshine Moxie Production · <em>The Forest of God's Answers</em>
+  </div>
+  <div class="sheet-header-right">
+    <span><span class="label">Loc:</span> Chicago / LA</span>
+    <span class="page-count">PG {pageNumber} / 8</span>
+  </div>
+</header>
+
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<nav class="scene-nav" id="sceneNav">
+  <a href="/" class="scene-nav-brand">
+    <span class="scene-nav-brand-name">Eliyannah Amirah <em>Yisrael</em></span>
+    <span class="scene-nav-brand-sub">Writer · Director</span>
+  </a>
+  <div class="scene-nav-section-label">Scene Breakdown</div>
+  <ul class="scene-list">
+    <li><a href="/" data-page="call-sheet" class:list={{ "is-active": pageSlug === "call-sheet" }}><span class="scene-num">01</span><span class="scene-name">Call Sheet</span></a></li>
+    <li><a href="/work" data-page="scenes" class:list={{ "is-active": pageSlug === "scenes" }}><span class="scene-num">02</span><span class="scene-name">Scenes / Work</span></a></li>
+    <li><a href="/crew" data-page="crew" class:list={{ "is-active": pageSlug === "crew" }}><span class="scene-num">03</span><span class="scene-name">Crew / About</span></a></li>
+    <li><a href="/forest" data-page="forest" class:list={{ "is-active": pageSlug === "forest" }}><span class="scene-num">04</span><span class="scene-name">The Forest</span></a></li>
+    <li><a href="/press" data-page="press" class:list={{ "is-active": pageSlug === "press" }}><span class="scene-num">05</span><span class="scene-name">Press</span></a></li>
+    <li><a href="/dailies" data-page="dailies" class:list={{ "is-active": pageSlug === "dailies" }}><span class="scene-num">06</span><span class="scene-name">Dailies</span></a></li>
+    <li><a href="/craft" data-page="craft" class:list={{ "is-active": pageSlug === "craft" }}><span class="scene-num">07</span><span class="scene-name">Craft Services</span></a></li>
+    <li><a href="/contact" data-page="contact" class:list={{ "is-active": pageSlug === "contact" }}><span class="scene-num">08</span><span class="scene-name">Hit Me Up</span></a></li>
+  </ul>
+  <div class="scene-nav-footer">
+    <span class="seal">Sunshine Moxie</span>
+    A Production Company under<br>
+    The Forest of God's Answers<br><br>
+    Chi · LA · MMXXVI
+  </div>
+</nav>
+
+<slot />
+
+<footer class="footer-seal">
+  <div class="footer-seal-main">
+    <div>
+      <div class="footer-seal-brand">Eliyannah Amirah <em>Yisrael</em></div>
+      <div class="footer-seal-blurb">
+        Writer and director working out of Chicago and Los Angeles. A Sunshine Moxie Production, under The Forest of God's Answers. High-art Black cinema, told specifically, told fully.
+      </div>
+    </div>
+    <div>
+      <div class="footer-signup-label">Subscribe · From the Forest</div>
+      <div class="footer-signup-copy">The mothership newsletter. Monthly.</div>
+      <form class="signup-compact" action="https://buttondown.com/api/emails/embed-subscribe/FROM_THE_FOREST" method="post" target="popupwindow">
+        <input type="email" name="email" placeholder="Your best email" aria-label="Email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-seal-bottom">
+    <div class="left">© MMXXVI · <a href="mailto:me@eliyannah.direct">me@eliyannah.direct</a></div>
+    <div class="center">A Sunshine Moxie Production · Under The Forest of God's Answers</div>
+    <div class="right">Chicago · Los Angeles · Wherever The Work Is</div>
+  </div>
+</footer>
+
+<script>
+  // Today's date in the header
+  const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = months[today.getMonth()];
+  const yy = String(today.getFullYear()).slice(-2);
+  const dateEl = document.getElementById('todayDate');
+  if (dateEl) dateEl.textContent = `${dd}.${mm}.${yy}`;
+
+  // Mobile menu
+  const menuToggle = document.getElementById('menuToggle');
+  const sceneNav = document.getElementById('sceneNav');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+
+  function closeMenu() {
+    if (!sceneNav) return;
+    sceneNav.classList.remove('is-open');
+    if (menuToggle) menuToggle.classList.remove('is-active');
+    if (mobileOverlay) mobileOverlay.classList.remove('is-visible');
+  }
+
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = sceneNav.classList.toggle('is-open');
+      menuToggle.classList.toggle('is-active', isOpen);
+      if (mobileOverlay) mobileOverlay.classList.toggle('is-visible', isOpen);
+    });
+  }
+
+  if (mobileOverlay) {
+    mobileOverlay.addEventListener('click', closeMenu);
+  }
+</script>
+
+</body>
+</html>
