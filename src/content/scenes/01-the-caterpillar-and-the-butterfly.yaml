@@ -10,7 +10,7 @@ synopsis: >
   the end.
 actions:
   - label: Open Film Site →
-    href: www.thecaterpillarandthebutterfly.com
+    href: https://www.thecaterpillarandthebutterfly.com
     primary: true
   - label: Script (Password)
     href: '#'
