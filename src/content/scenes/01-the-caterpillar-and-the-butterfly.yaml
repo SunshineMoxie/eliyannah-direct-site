@@ -1,29 +1,33 @@
-sceneNumber: "01"
-slugline: "INT. Chicago — 2026 — Day · Feature Film · In Development"
-title: "*The Caterpillar* and *The Butterfly*"
-tagline: "A South Side mother and daughter. One summer. Becoming, and what it costs."
-synopsis: |
-  Ronnie and TaLisha do not know each other. They ride the same bus on the south side of Chicago. Over the course of one spring, they trade places in the metaphor, the caterpillar and the butterfly, moving in opposite emotional directions. They speak twice: once at the beginning of the journey, once at the end.
+sceneNumber: '01'
+title: '*The Caterpillar* and *The Butterfly*'
+slugline: INT. Chicago — 2026 — Day · Feature Film · In Development
+tagline: A South Side mother and daughter. One summer. Becoming, and what it costs.
+synopsis: >
+  Ronnie and TaLisha do not know each other. They ride the same bus on the south
+  side of Chicago. Over the course of one spring, they trade places in the
+  metaphor, the caterpillar and the butterfly, moving in opposite emotional
+  directions. They speak twice: once at the beginning of the journey, once at
+  the end.
 actions:
-  - label: "Open Film Site →"
-    href: "#"
+  - label: Open Film Site →
+    href: www.thecaterpillarandthebutterfly.com
     primary: true
-  - label: "Script (Password)"
-    href: "#"
+  - label: Script (Password)
+    href: '#'
     primary: false
-  - label: "Lookbook"
-    href: "#"
+  - label: Lookbook
+    href: '#'
     primary: false
 meta:
-  - key: "Scene"
-    value: "01"
-  - key: "Status"
-    value: "*In Development*"
-  - key: "Writer"
-    value: "E.A. Yisrael"
-  - key: "Director"
-    value: "E.A. Yisrael"
-  - key: "Setting"
-    value: "Chicago, IL"
-  - key: "Format"
-    value: "Feature · Film"
+  - key: Scene
+    value: '01'
+  - key: Status
+    value: '*In Development*'
+  - key: Writer
+    value: E.A. Yisrael
+  - key: Director
+    value: E.A. Yisrael
+  - key: Setting
+    value: Chicago, IL
+  - key: Format
+    value: Feature · Film
