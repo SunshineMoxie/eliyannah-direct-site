@@ -1,0 +1,21 @@
+sceneNumber: "03"
+slugline: "INT. Studio — Day · Short Narrative · Completed"
+title: "*The Life* I Carry"
+tagline: "PROMPT: One-line tagline. Your voice."
+synopsis: |
+  PROMPT: Two- to three-sentence synopsis. What the short is. Who's in it. What it does.
+actions:
+  - label: "Watch →"
+    href: "#"
+    primary: true
+meta:
+  - key: "Scene"
+    value: "03"
+  - key: "Status"
+    value: "*Released*"
+  - key: "Runtime"
+    value: "19:49"
+  - key: "Role"
+    value: "Director · Writer"
+  - key: "Format"
+    value: "Short Film"

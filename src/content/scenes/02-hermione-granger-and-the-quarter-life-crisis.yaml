@@ -1,0 +1,31 @@
+sceneNumber: "02"
+slugline: "INT. / EXT. Various — 2016–2017 · Webseries · Completed"
+title: "*Hermione Granger* and the Quarter Life Crisis"
+tagline: "Hermione Granger, Black, Brooklyn, broke, and grown. The quarter-life crisis as a two-season arc."
+synopsis: |
+  Two seasons of a Black Hermione in her mid-twenties, working, broke, trying to make a life the books never imagined for her and the films refused to. Festival selections, press in PBS, *Emmy* magazine, *The Los Angeles Times*, and *Elle UK*.
+
+  Credited as creator, showrunner, director, and writer. The project that built the audience and proved the voice.
+actions:
+  - label: "Watch Episode 101 →"
+    href: "#"
+    primary: true
+  - label: "Season 2 Premiere"
+    href: "#"
+    primary: false
+  - label: "Press Coverage"
+    href: "/press"
+    primary: false
+meta:
+  - key: "Scene"
+    value: "02"
+  - key: "Status"
+    value: "*Released*"
+  - key: "Seasons"
+    value: "Two"
+  - key: "Role"
+    value: "Creator · Showrunner · Director · Writer"
+  - key: "Press"
+    value: "PBS · Emmy · LA Times · Elle UK"
+  - key: "Format"
+    value: "Digital Series"

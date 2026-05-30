@@ -1,0 +1,24 @@
+sceneNumber: "04"
+slugline: "EXT. Various — Day · Commercial & Music Video · Completed"
+title: "Commercial *&* Music Video"
+tagline: "Mik Jacobi. bigbellyrelli. Tetris for Coachella. The commissioned work that keeps the eye sharp."
+synopsis: |
+  Music videos and commercial work, folded together because they live in the same part of the brain, short form, specific brief, make it feel like something. The Tetris piece, *Indio*, became the Coachella theme.
+
+  The work on this scene keeps the craft muscles loose between longer projects. Every frame is a rehearsal for the next feature.
+actions:
+  - label: "Watch Reel →"
+    href: "#"
+    primary: true
+  - label: "Full Project List"
+    href: "#"
+    primary: false
+meta:
+  - key: "Scene"
+    value: "04"
+  - key: "Status"
+    value: "*Released*"
+  - key: "Format"
+    value: "Music Video · Commercial"
+  - key: "Notable"
+    value: "Coachella \"Indio\" Theme"

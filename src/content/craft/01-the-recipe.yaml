@@ -1,0 +1,5 @@
+number: "01"
+label: "The Recipe"
+title: "The *chocolate chip cookie* that won."
+body: |
+  PROMPT: Name the cookie recipe. Not the generic Toll House version, *your* version. The one with the browned butter or the flaky salt or the night-long rest. A sentence of why it wins. A link to the recipe if it's public, or a "drop me a line and I'll send it" if it's not.
