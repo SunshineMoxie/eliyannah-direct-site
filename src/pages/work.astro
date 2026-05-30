@@ -51,9 +51,18 @@ const scenes = rawScenes
                 )}
                 {scene.actions && scene.actions.length > 0 && (
                   <div class="scene-entry-actions">
-                    {scene.actions.map((a) => (
-                      <a href={a.href || "#"} class={a.primary ? "primary" : undefined}>{a.label}</a>
-                    ))}
+                    {scene.actions.map((a) => {
+                      const href = a.href || "#";
+                      const external = href.startsWith("http");
+                      return (
+                        <a
+                          href={href}
+                          class={a.primary ? "primary" : undefined}
+                          target={external ? "_blank" : undefined}
+                          rel={external ? "noopener" : undefined}
+                        >{a.label}</a>
+                      );
+                    })}
                   </div>
                 )}
               </div>
