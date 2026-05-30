@@ -1,5 +1,15 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+import { renderInline, renderProse } from "../lib/render-prose";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const rawCraft = await reader.collections.craft.all();
+
+const items = rawCraft
+  .map(({ entry }) => entry)
+  .sort((a, b) => (a.number || "").localeCompare(b.number || ""));
 ---
 
 <BaseLayout
@@ -22,62 +32,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </p>
 
     <div class="craft-menu">
-
-      <div class="craft-item">
-        <div class="craft-item-number">01</div>
-        <div class="craft-item-label">The Recipe</div>
-        <h3 class="craft-item-title">The <em>chocolate chip cookie</em> that won.</h3>
-        <div class="craft-item-body">
-          <span class="prompt">Name the cookie recipe. Not the generic Toll House version — <em>your</em> version. The one with the browned butter or the flaky salt or the night-long rest. A sentence of why it wins. A link to the recipe if it's public, or a "drop me a line and I'll send it" if it's not.</span>
-        </div>
-      </div>
-
-      <div class="craft-item">
-        <div class="craft-item-number">02</div>
-        <div class="craft-item-label">The Reading List</div>
-        <h3 class="craft-item-title">What's <em>open</em> on the nightstand right now.</h3>
-        <div class="craft-item-body">
-          <span class="prompt">Three to five books. Actual current reading. A novel, a memoir, a work of criticism, a trade book on the industry, a cookbook. The list from the voice map — Sophie Kinsella next to Toni Morrison — is the register to hit.</span>
-        </div>
-      </div>
-
-      <div class="craft-item">
-        <div class="craft-item-number">03</div>
-        <div class="craft-item-label">The Building Playlist</div>
-        <h3 class="craft-item-title">The <em>soundtrack</em> for making a forest.</h3>
-        <div class="craft-item-body">
-          <span class="prompt">A short description of what's on rotation while you work. A Spotify or Apple Music link if you have a public playlist for this. A line of context — what the playlist is for, what the mood is.</span>
-        </div>
-      </div>
-
-      <div class="craft-item">
-        <div class="craft-item-number">04</div>
-        <div class="craft-item-label">The Chicago Map</div>
-        <h3 class="craft-item-title">The <em>spots</em> I defend in court.</h3>
-        <div class="craft-item-body">
-          <span class="prompt">Five Chicago places you actually love and go to. A restaurant. A bookstore. A neighborhood. A museum. A barbershop or salon you trust. One line each. The geographic specificity is the whole point.</span>
-        </div>
-      </div>
-
-      <div class="craft-item">
-        <div class="craft-item-number">05</div>
-        <div class="craft-item-label">The Watch List</div>
-        <h3 class="craft-item-title">What I <em>just saw</em> and can't stop thinking about.</h3>
-        <div class="craft-item-body">
-          <span class="prompt">One film or TV show, currently. Not a capsule review. A sentence on the one specific thing it's teaching you about the work. (The voice map note — "not just watching, studying" — applies here.)</span>
-        </div>
-      </div>
-
-      <div class="craft-item">
-        <div class="craft-item-number">06</div>
-        <div class="craft-item-label">The YouTube Channel</div>
-        <h3 class="craft-item-title">Sunshine <em>Moxie</em> on YouTube.</h3>
-        <div class="craft-item-body">
-          <p>The beginning of the Sunshine Moxie cultural commentary show — Cultural Curiosity and Commentary in video form. Currently in development. Existing work and older videos already live on the channel.</p>
-          <p style="margin-top: 0.75rem;"><a href="https://www.youtube.com/@SunshineMoxie" style="color: var(--ink); border-bottom: 2px solid var(--kodak); text-decoration: none; font-weight: 600;">@SunshineMoxie →</a></p>
-        </div>
-      </div>
-
+      {items.map((item) => {
+        const title = renderInline(item.title);
+        const body = renderProse(item.body);
+        return (
+          <div class="craft-item">
+            <div class="craft-item-number">{item.number}</div>
+            <div class="craft-item-label">{item.label}</div>
+            <h3 class="craft-item-title" set:html={title.html} />
+            {body.prompt
+              ? <div class="craft-item-body"><span class="prompt" set:html={body.html} /></div>
+              : <div class="craft-item-body" set:html={body.html} />}
+          </div>
+        );
+      })}
     </div>
   </section>
 </main>

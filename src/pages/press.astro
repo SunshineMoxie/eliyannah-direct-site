@@ -1,5 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const rawPress = await reader.collections.press.all();
+const clippings = rawPress.map(({ entry }) => entry);
+
+// Fixed category display order. Each section only renders if it has entries.
+const CATEGORY_ORDER = ["Print", "Video", "Audio", "Appearances"];
+const grouped = CATEGORY_ORDER.map((cat) => ({
+  category: cat,
+  items: clippings
+    .filter((c) => c.category === cat)
+    .sort((a, b) => (a.sortOrder ?? 100) - (b.sortOrder ?? 100)),
+})).filter((g) => g.items.length > 0);
 ---
 
 <BaseLayout
@@ -18,53 +33,27 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </p>
 
     <p class="press-intro">
-      Most of the press below was earned for Hermione Granger and the Quarter Life Crisis in 2016–17. The coverage is older than ideal. The fact that the outlets are <em>real</em> — and that their coverage was, too — is what matters. More is coming. Journalists, this page will be active again soon.
+      Most of the press below was earned for Hermione Granger and the Quarter Life Crisis. The coverage is older than ideal. The fact that the outlets are <em>real</em>, and that their coverage was, too, is what matters. More is coming. Journalists, this page will be active again soon.
     </p>
 
-    <div class="press-archive-label">
-      <span>Press Archive</span>
-      <span class="sub">2016 — Present</span>
-    </div>
-
-    <div class="press-clippings">
-
-      <a href="#" class="press-clip">
-        <div class="press-clip-outlet">PBS</div>
-        <div class="press-clip-quote">
-          <span class="prompt small">Paste the actual pull quote from the PBS coverage. Keep it to one sentence.</span>
+    {grouped.map((group) => (
+      <>
+        <div class="press-archive-label">
+          <span>{group.category}</span>
+          <span class="sub">{group.items.length} {group.items.length === 1 ? "entry" : "entries"}</span>
         </div>
-        <div class="press-clip-date">Feature · 2017</div>
-        <div class="press-clip-project">Hermione Granger and the Quarter Life Crisis</div>
-      </a>
-
-      <a href="#" class="press-clip">
-        <div class="press-clip-outlet">Emmy Magazine</div>
-        <div class="press-clip-quote">
-          <span class="prompt small">The Emmy pull quote goes here.</span>
+        <div class="press-clippings">
+          {group.items.map((clip) => (
+            <a href={clip.link || "#"} class="press-clip" target="_blank" rel="noopener">
+              <div class="press-clip-outlet">{clip.outlet}</div>
+              <div class="press-clip-date">{clip.date}</div>
+              <div class="press-clip-quote">{clip.title}</div>
+              <div class="press-clip-project">{clip.project}</div>
+            </a>
+          ))}
         </div>
-        <div class="press-clip-date">Feature · 2017</div>
-        <div class="press-clip-project">Hermione Granger and the Quarter Life Crisis</div>
-      </a>
-
-      <a href="#" class="press-clip">
-        <div class="press-clip-outlet">The Los Angeles Times</div>
-        <div class="press-clip-quote">
-          <span class="prompt small">The LA Times pull quote.</span>
-        </div>
-        <div class="press-clip-date">Feature · 2016</div>
-        <div class="press-clip-project">Hermione Granger and the Quarter Life Crisis</div>
-      </a>
-
-      <a href="#" class="press-clip">
-        <div class="press-clip-outlet">Elle UK</div>
-        <div class="press-clip-quote">
-          <span class="prompt small">The Elle UK pull quote.</span>
-        </div>
-        <div class="press-clip-date">Feature · 2017</div>
-        <div class="press-clip-project">Hermione Granger and the Quarter Life Crisis</div>
-      </a>
-
-    </div>
+      </>
+    ))}
 
     <div class="press-kit">
       <div class="press-kit-label">For Journalists, Festivals &amp; Industry</div>
