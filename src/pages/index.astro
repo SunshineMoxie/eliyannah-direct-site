@@ -1,5 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+import { renderPanelValue } from "../lib/render-text";
+
+// Read the four status panels from the Keystatic singleton at build time.
+// If the file is ever missing or unreadable, we fall back to the known copy so
+// the landing page can never render with empty panels.
+const reader = createReader(process.cwd(), keystaticConfig);
+const status = await reader.singletons.callSheetStatus.read();
+
+const FALLBACK_PANELS = [
+  { label: "Current Production", value: "*The Caterpillar and The Butterfly*", sub: "Feature · In Development", highlight: false },
+  { label: "Status", value: "Actively Pitching", sub: "Actors · Producers · Agents", highlight: false },
+  { label: "Based In", value: "Chicago & LA", sub: "Will Travel For Work", highlight: false },
+  { label: "Now On Deck", value: "From The *Forest*", sub: "Newsletter · Launches May 3", highlight: true },
+];
+
+const panels = status?.panels?.length ? status.panels : FALLBACK_PANELS;
 ---
 
 <BaseLayout
@@ -49,28 +67,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </div>
     </div>
 
-    <!-- Production info panels -->
+    <!-- Production info panels (now editable via /keystatic) -->
     <div class="production-info">
-      <div class="info-panel">
-        <div class="label">Current Production</div>
-        <div class="value"><em>The Caterpillar<br>and The Butterfly</em></div>
-        <div class="sub">Feature · In Development</div>
-      </div>
-      <div class="info-panel">
-        <div class="label">Status</div>
-        <div class="value">Actively<br>Pitching</div>
-        <div class="sub">Actors · Producers · Agents</div>
-      </div>
-      <div class="info-panel">
-        <div class="label">Based In</div>
-        <div class="value">Chicago<br>& LA</div>
-        <div class="sub">Will Travel For Work</div>
-      </div>
-      <div class="info-panel weather">
-        <div class="label">Now On Deck</div>
-        <div class="value">From<br>The <em>Forest</em></div>
-        <div class="sub">Newsletter · Launches May 3</div>
-      </div>
+      {panels.map((panel) => (
+        <div class={panel.highlight ? "info-panel weather" : "info-panel"}>
+          <div class="label">{panel.label}</div>
+          <div class="value" set:html={renderPanelValue(panel.value)} />
+          <div class="sub">{panel.sub}</div>
+        </div>
+      ))}
     </div>
 
     <!-- Scheduled scenes -->
