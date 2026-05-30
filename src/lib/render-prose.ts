@@ -18,10 +18,15 @@ function escapeHtml(s: string): string {
 }
 
 function applyInline(escaped: string): string {
-  // links: [text](url) — only http(s) and mailto allowed
+  // links: [text](url) — only http(s) and mailto allowed.
+  // External http(s) links open in a new tab; mailto and internal links don't.
   let out = escaped.replace(
     /\[([^\]]+)\]\((https?:\/\/[^\s)]+|mailto:[^\s)]+)\)/g,
-    '<a href="$2">$1</a>'
+    (_m, text, url) => {
+      const external = /^https?:\/\//.test(url);
+      const attrs = external ? ' target="_blank" rel="noopener"' : "";
+      return `<a href="${url}"${attrs}>${text}</a>`;
+    }
   );
   // emphasis: *word*
   out = out.replace(/\*([^*]+)\*/g, "<em>$1</em>");
