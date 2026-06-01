@@ -23,6 +23,7 @@ export default config({
       Work: ['scenes'],
       Press: ['press'],
       'Craft Services': ['craft'],
+      'The Forest': ['forest'],
       Contact: ['contact'],
       Writing: ['dailies'],
     },
@@ -237,6 +238,76 @@ export default config({
             }),
           }),
           { label: 'Social links', itemLabel: (p) => p.fields.platform.value || 'Link' }
+        ),
+      },
+    }),
+
+    forest: singleton({
+      label: 'The Forest page',
+      path: 'src/content/forest',
+      schema: {
+        title: fields.text({ label: 'Page title', description: '*asterisks* for emerald italic.' }),
+        subtitle: fields.text({ label: 'Subtitle', multiline: true }),
+        intro: fields.text({
+          label: 'Intro paragraphs',
+          description: 'Blank line between paragraphs. *asterisks* for italic.',
+          multiline: true,
+        }),
+        introEmphasis: fields.text({
+          label: 'Emphasis line',
+          description: 'The pulled-out italic line after the intro (green left border).',
+          multiline: true,
+        }),
+        etymology: fields.object({
+          label: fields.text({ label: 'Box label', defaultValue: 'Etymology' }),
+          word: fields.text({ label: 'Word' }),
+          pronunciation: fields.text({ label: 'Pronunciation' }),
+          meaning: fields.text({ label: 'Meaning' }),
+          translatesTo: fields.text({ label: 'Translates-to line', multiline: true }),
+        }, { label: 'Etymology box' }),
+
+        copsesHeading: fields.text({ label: 'Copses section heading', defaultValue: 'The Copses' }),
+        copsesTitle: fields.text({ label: 'Copses title', description: '*asterisks* for italic.' }),
+        copsesIntro: fields.text({ label: 'Copses intro', multiline: true }),
+        copses: fields.array(
+          fields.object({
+            number: fields.text({ label: 'Number label', description: 'e.g. "Copse · 01".' }),
+            name: fields.text({ label: 'Name', description: '*asterisks* for emerald italic.' }),
+            status: fields.text({ label: 'Status pill', description: 'e.g. "In Motion", "Building", "Naming".' }),
+            inMotion: fields.checkbox({ label: 'Status pill is emerald (the "In Motion" style)', defaultValue: false }),
+            current: fields.checkbox({ label: 'Highlight this card yellow (the current copse)', defaultValue: false }),
+            tagline: fields.text({ label: 'Tagline', multiline: true }),
+            blurb: fields.text({ label: 'Blurb', multiline: true }),
+            brands: fields.text({ label: 'Inside the copse (brand list)', description: 'Separate with " · ".', multiline: true }),
+          }),
+          {
+            label: 'Copses',
+            description: 'The grid is designed for three. More or fewer still saves, but three looks best.',
+            itemLabel: (p) => p.fields.name.value || 'Copse',
+          }
+        ),
+
+        signupEyebrow: fields.text({ label: 'Signup eyebrow' }),
+        signupTitle: fields.text({ label: 'Signup title', description: '*asterisks* for italic.' }),
+        signupBody: fields.text({ label: 'Signup body', multiline: true }),
+        signupFootnote: fields.text({ label: 'Signup footnote' }),
+
+        branchesHeading: fields.text({ label: 'Branches section heading', defaultValue: 'The Branch Letters' }),
+        branchesTitle: fields.text({ label: 'Branches title', description: '*asterisks* for italic.' }),
+        branchesIntro: fields.text({ label: 'Branches intro', multiline: true }),
+        branches: fields.array(
+          fields.object({
+            type: fields.text({ label: 'Type label', description: 'e.g. "Mothership", "Branch · 01".' }),
+            name: fields.text({ label: 'Name', description: '*asterisks* for emerald italic.' }),
+            status: fields.text({ label: 'Status' }),
+            mothership: fields.checkbox({ label: 'Highlight yellow (the mothership cell)', defaultValue: false }),
+            desc: fields.text({ label: 'Description', multiline: true }),
+          }),
+          {
+            label: 'Branch letters',
+            description: 'The grid is designed for four. More or fewer still saves, but four looks best.',
+            itemLabel: (p) => p.fields.name.value || 'Branch',
+          }
         ),
       },
     }),
