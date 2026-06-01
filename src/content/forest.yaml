@@ -1,0 +1,71 @@
+title: "The *Forest* of God's Answers"
+subtitle: "The parent company. The ecosystem. What I mean when I say I am building."
+intro: |
+  The Forest of God's Answers is a holding company and a naming system. It is the roof over every business I am building, and it is the philosophy that keeps them related to each other.
+
+  Inside the forest are *copses* — groves of related businesses organized by what they do. Sunshine Moxie is the film and television copse. A Foremother's Brand is the retail copse. Creative Placemaking (still being named) is the community copse. Each copse will eventually have its own dedicated spaces, its own audience, and its own *branch letter* — a dedicated newsletter for readers who want to go deeper on that specific world.
+
+  The mothership newsletter, *From the Forest*, is the view from above — one monthly letter from me, covering what I am building across all of it. It launches May 3.
+introEmphasis: "Every copse is its own thing. They share a forest."
+etymology:
+  label: Etymology
+  word: Eliyannah
+  pronunciation: "el·ee·YAH·nah · Hebrew"
+  meaning: '"My God has answered."'
+  translatesTo: "The forest is the answer. Every copse is another answer."
+copsesHeading: The Copses
+copsesTitle: "Three *groves*, one forest."
+copsesIntro: "Each copse holds multiple businesses, each with its own name and identity. The copse is the organizing principle. The businesses are where the work actually happens."
+copses:
+  - number: "Copse · 01"
+    name: "Sunshine *Moxie*"
+    status: "In Motion"
+    inMotion: true
+    current: true
+    tagline: "High art Black cinema, live theater, television."
+    blurb: "The motion picture copse. Where the films, the shows, and the cultural criticism live. Currently home to the feature in development and the YouTube show in development. The house Ryan Coogler and Proximity built gave us the blueprint. This is the Chicago, Midwestern version."
+    brands: "Sunshine Moxie Films · Sunshine Moxie Productions · Sunshine Moxie Creative"
+  - number: "Copse · 02"
+    name: "A Foremother's *Brand*"
+    status: "Building"
+    inMotion: false
+    current: false
+    tagline: "Retail and lifestyle, named for the women who built me."
+    blurb: "The retail copse. Each brand inside it carries a foremother's name and holds her legacy inside the product. Luxury leather goods. Stationery for people who still write by hand. Accessories for book lovers. An event design company. A creative admin agency. Heirloom is the coming branch letter."
+    brands: "Maggie Bell 1915 · Pearl 1888 · Morgan & Melissa · The Alice Morgan Agency · EveLuxe Table Co"
+  - number: "Copse · 03"
+    name: "Creative *Placemaking*"
+    status: "Naming"
+    inMotion: false
+    current: false
+    tagline: "Creative community, creative education, creative gathering."
+    blurb: "The placemaking copse — the one still picking its permanent name. Home to the festivals, the co-working spaces, the artisan guild, the classical arts academies, the arts-and-tech centers, and The Community Apostles. This is where the forest touches the ground in every neighborhood it serves. The Gathering is the coming branch letter."
+    brands: "The Lakeshore Guild · American Negro Cultural Academies · Art & Tech Centers · The Community Apostles"
+signupEyebrow: "The Mothership · Monthly · Launches May 3"
+signupTitle: "*From the Forest* — one letter, the view from above."
+signupBody: "A personal letter from Eliyannah, once a month. What she's writing, directing, building, and reading. Cultural commentary, behind-the-scenes updates across every copse, and the books, films, and people currently feeding the work. The mothership every branch letter flows out of."
+signupFootnote: "No spam. Monthly. Unsubscribe anytime."
+branchesHeading: The Branch Letters
+branchesTitle: "The *newsletter* family."
+branchesIntro: "From the Forest is the mothership. As each copse matures, its own branch letter launches — a dedicated publication for the readers who want to go deeper on that specific world."
+branches:
+  - type: Mothership
+    name: "*From the Forest*"
+    status: "Launches May 3"
+    mothership: true
+    desc: "Monthly. Personal. The view from above — every copse, every project, in Eliyannah's voice."
+  - type: "Branch · 01"
+    name: "*The Reel*"
+    status: "2026 · TBA"
+    mothership: false
+    desc: "The Sunshine Moxie letter. Film, television, cultural commentary."
+  - type: "Branch · 02"
+    name: "*Heirloom*"
+    status: "2026 · TBA"
+    mothership: false
+    desc: "A Foremother's Brand. Retail, legacy, the women the brands are named for."
+  - type: "Branch · 03"
+    name: "*The Gathering*"
+    status: "2026 · TBA"
+    mothership: false
+    desc: "Creative Placemaking. Festivals, co-working, guilds, community."
