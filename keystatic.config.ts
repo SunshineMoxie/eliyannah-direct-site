@@ -190,6 +190,15 @@ export default config({
       label: 'Contact page',
       path: 'src/content/contact',
       schema: {
+        title: fields.text({
+          label: 'Page title',
+          description: 'The big heading. *asterisks* for emerald italic, e.g. Hit *Me* Up.',
+        }),
+        subtitle: fields.text({
+          label: 'Subtitle',
+          description: 'The line under the title.',
+          multiline: true,
+        }),
         lead: fields.text({
           label: 'Lead line',
           description: 'The italic intro sentence. *asterisks* for emerald italic.',
