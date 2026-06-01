@@ -35,8 +35,8 @@ copsesHeading: The Copses
 copsesTitle: Three *groves*, one forest.
 copsesIntro: >-
   Each copse holds multiple businesses, each with its own name and identity. The
-  copse is the organizing principle. The businesses are where the work actually
-  happens.
+  copse is the organizing principle and the businesses are where the work
+  actually happens.
 copses:
   - number: Copse · 01
     name: Sunshine *Moxie*
@@ -84,7 +84,7 @@ copses:
     brands: >-
       The Lakeshore Guild · American Negro Cultural Academies · Art & Tech
       Centers · The Community Apostles
-signupEyebrow: The Mothership · Monthly · Launched May 3
+signupEyebrow: The Mothership · Monthly · Planted May 3
 signupTitle: '*From the Forest* — one letter, the view from above.'
 signupBody: >-
   A personal letter from me, once a month. What I'm writing, directing,
