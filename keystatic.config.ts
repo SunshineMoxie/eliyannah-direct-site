@@ -23,6 +23,7 @@ export default config({
       Work: ['scenes'],
       Press: ['press'],
       'Craft Services': ['craft'],
+      Contact: ['contact'],
       Writing: ['dailies'],
     },
   },
@@ -181,6 +182,52 @@ export default config({
             highlight: fields.checkbox({ label: 'Highlight this panel yellow', defaultValue: false }),
           }),
           { label: 'Panels', itemLabel: (p) => p.fields.label.value || 'Panel' }
+        ),
+      },
+    }),
+
+    contact: singleton({
+      label: 'Contact page',
+      path: 'src/content/contact',
+      schema: {
+        lead: fields.text({
+          label: 'Lead line',
+          description: 'The italic intro sentence. *asterisks* for emerald italic.',
+          multiline: true,
+        }),
+        blocks: fields.array(
+          fields.object({
+            label: fields.text({ label: 'Label', description: 'e.g. "Direct", "Representation".' }),
+            value: fields.text({
+              label: 'Value',
+              description: 'The big line. If a Link is set, this becomes the clickable text.',
+              multiline: true,
+            }),
+            link: fields.text({
+              label: 'Link (optional)',
+              description: 'Leave blank for plain text (e.g. the representation status). Use mailto:you@… for email, /press for an internal page, or a full https:// URL. External links open in a new tab.',
+            }),
+            note: fields.text({ label: 'Small note underneath', multiline: true }),
+            highlight: fields.checkbox({
+              label: 'Highlight this block yellow',
+              description: 'Designed for one block at a time.',
+              defaultValue: false,
+            }),
+          }),
+          { label: 'Contact blocks', itemLabel: (p) => p.fields.label.value || 'Block' }
+        ),
+        socialLabel: fields.text({ label: 'Social section heading', defaultValue: 'Elsewhere on the Internet' }),
+        socialSub: fields.text({ label: 'Social section sub-label', defaultValue: 'Follow / Watch / Read' }),
+        socials: fields.array(
+          fields.object({
+            platform: fields.text({ label: 'Platform', description: 'e.g. "Instagram".' }),
+            handle: fields.text({ label: 'Handle / display text', description: 'e.g. "@eliyannahdirect".' }),
+            link: fields.text({
+              label: 'Link',
+              description: 'Full https:// URL. Leave blank to show as text with no link (e.g. a site not live yet). External links open in a new tab.',
+            }),
+          }),
+          { label: 'Social links', itemLabel: (p) => p.fields.platform.value || 'Link' }
         ),
       },
     }),
