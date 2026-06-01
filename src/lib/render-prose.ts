@@ -75,3 +75,12 @@ export function renderProse(value: unknown): { html: string; prompt: boolean } {
     });
   return { html: paragraphs.join("\n"), prompt: false };
 }
+
+// Decide how a link should open. External http(s) links open in a new tab;
+// internal paths (/press) and mailto: stay in the same tab. Returns the
+// attributes string to drop into an <a> tag, or "" for same-tab.
+export function linkTarget(href: unknown): string {
+  return typeof href === "string" && /^https?:\/\//.test(href)
+    ? ' target="_blank" rel="noopener"'
+    : "";
+}
