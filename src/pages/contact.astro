@@ -9,6 +9,8 @@ const c = await reader.singletons.contact.read();
 
 // Fallback so the page can never render empty if the file is missing.
 const FALLBACK = {
+  title: "Hit *Me* Up.",
+  subtitle: "Many Paths. One Creative Heart. Let's Connect.",
   lead: 'For project conversations, representation inquiries, press, and the occasional *"we should meet."*',
   blocks: [
     { label: "Direct", value: "me@eliyannah.direct", link: "mailto:me@eliyannah.direct", note: "I read every email. I answer most of them.", highlight: true },
@@ -45,10 +47,8 @@ function isExternal(href) {
 <main class="main">
   <section class="page">
     <div class="page-eyebrow">Section 08 · Contact</div>
-    <h1 class="page-title">Hit <em>Me</em> Up.</h1>
-    <p class="page-subtitle">
-      One path. Direct. Use your real subject line.
-    </p>
+    <h1 class="page-title" set:html={renderInline(data.title).html} />
+    <p class="page-subtitle" set:html={renderInline(data.subtitle).html} />
 
     <p class="contact-lead" set:html={renderInline(data.lead).html} />
 
