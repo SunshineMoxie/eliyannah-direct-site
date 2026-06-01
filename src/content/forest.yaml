@@ -55,7 +55,7 @@ copses:
     status: Building
     inMotion: false
     current: false
-    tagline: Retail and lifestyle, named for the women who built me.
+    tagline: Luxury retail and lifestyle, named for the women who built me.
     blurb: >-
       The retail copse. Each brand inside it carries a foremother's name and
       holds her legacy inside the product. Luxury leather goods. Stationery for
@@ -66,17 +66,19 @@ copses:
       Maggie Bell 1915 · Pearl 1888 · Morgan & Melissa · The Alice Morgan Agency
       · EveLuxe Table Co
   - number: Copse · 03
-    name: Creative *Placemaking*
-    status: Naming
+    name: Black Town *Square*
+    status: Dreaming
     inMotion: false
     current: false
-    tagline: Creative community, creative education, creative gathering.
+    tagline: >-
+      Creative community, creative education, creative gathering, cultural
+      retention.
     blurb: >-
-      The placemaking copse — the one still picking its permanent name. Home to
-      the festivals, the co-working spaces, the artisan guild, the classical
-      arts academies, the arts-and-tech centers, and The Community Apostles.
-      This is where the forest touches the ground in every neighborhood it
-      serves. The Gathering is the coming branch letter.
+      The placemaking copse — home to the cultural festivals, co-working spaces,
+      the artisan guild, classical arts academies, arts-and-tech centers, and
+      The Community Apostles. This is where the forest touches the ground in
+      every neighborhood it serves, teaching, learning about and protecting
+      Black American culture. The Gathering is the coming branch letter.
     brands: >-
       The Lakeshore Guild · American Negro Cultural Academies · Art & Tech
       Centers · The Community Apostles
