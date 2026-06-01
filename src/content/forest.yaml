@@ -94,13 +94,13 @@ signupFootnote: No spam. Monthly. Unsubscribe anytime.
 branchesHeading: The Branch Letters
 branchesTitle: The *newsletter* family.
 branchesIntro: >-
-  From the Forest is the mothership. As each copse matures, its own branch
+  'From the Forest' is the mothership. As each copse matures, its own branch
   letter launches — a dedicated publication for the readers who want to go
   deeper on that specific world.
 branches:
   - type: Mothership
     name: '*From the Forest*'
-    status: 2026. Launched May 3.
+    status: 2026. Planted May 3.
     mothership: true
     desc: >-
       This one is monthly, it's personal, it's the view from above — every
