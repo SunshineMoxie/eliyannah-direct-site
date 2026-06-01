@@ -1,0 +1,37 @@
+lead: 'For project conversations, representation inquiries, press, and the occasional *"we should meet."*'
+blocks:
+  - label: Direct
+    value: "me@eliyannah.direct"
+    link: "mailto:me@eliyannah.direct"
+    note: "I read every email. I answer most of them."
+    highlight: true
+  - label: Representation
+    value: "Currently unsigned. Warm intros welcome."
+    link: ""
+    note: "Agents, managers — write to the direct line above."
+    highlight: false
+  - label: "Press & Festivals"
+    value: "See the press kit →"
+    link: "/press"
+    note: "Photos, bio, one-sheets, and interview request form."
+    highlight: false
+  - label: Newsletter
+    value: "From the Forest →"
+    link: "/forest"
+    note: "Monthly. Launches May 3. Subscribe there."
+    highlight: false
+socialLabel: "Elsewhere on the Internet"
+socialSub: "Follow / Watch / Read"
+socials:
+  - platform: Instagram
+    handle: "@eliyannahdirect"
+    link: "https://instagram.com/eliyannahdirect"
+  - platform: YouTube
+    handle: "@SunshineMoxie"
+    link: "https://www.youtube.com/@SunshineMoxie"
+  - platform: IMDb
+    handle: "Eliyannah A. Yisrael"
+    link: "https://www.imdb.com/name/nm6607074/"
+  - platform: The Forest
+    handle: "forestofgodsanswers.com"
+    link: ""
