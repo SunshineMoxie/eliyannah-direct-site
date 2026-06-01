@@ -1,5 +1,38 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+import { renderInline } from "../lib/render-prose";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const c = await reader.singletons.contact.read();
+
+// Fallback so the page can never render empty if the file is missing.
+const FALLBACK = {
+  lead: 'For project conversations, representation inquiries, press, and the occasional *"we should meet."*',
+  blocks: [
+    { label: "Direct", value: "me@eliyannah.direct", link: "mailto:me@eliyannah.direct", note: "I read every email. I answer most of them.", highlight: true },
+    { label: "Representation", value: "Currently unsigned. Warm intros welcome.", link: "", note: "Agents, managers — write to the direct line above.", highlight: false },
+    { label: "Press & Festivals", value: "See the press kit →", link: "/press", note: "Photos, bio, one-sheets, and interview request form.", highlight: false },
+    { label: "Newsletter", value: "From the Forest →", link: "/forest", note: "Monthly. Launches May 3. Subscribe there.", highlight: false },
+  ],
+  socialLabel: "Elsewhere on the Internet",
+  socialSub: "Follow / Watch / Read",
+  socials: [
+    { platform: "Instagram", handle: "@eliyannahdirect", link: "https://instagram.com/eliyannahdirect" },
+    { platform: "YouTube", handle: "@SunshineMoxie", link: "https://www.youtube.com/@SunshineMoxie" },
+    { platform: "IMDb", handle: "Eliyannah A. Yisrael", link: "https://www.imdb.com/name/nm6607074/" },
+    { platform: "The Forest", handle: "forestofgodsanswers.com", link: "" },
+  ],
+};
+
+const data = c ?? FALLBACK;
+const blocks = data.blocks?.length ? data.blocks : FALLBACK.blocks;
+const socials = data.socials?.length ? data.socials : FALLBACK.socials;
+
+function isExternal(href) {
+  return typeof href === "string" && /^https?:\/\//.test(href);
+}
 ---
 
 <BaseLayout
@@ -17,66 +50,53 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       One path. Direct. Use your real subject line.
     </p>
 
-    <p class="contact-lead">
-      For project conversations, representation inquiries, press, and the occasional <em>"we should meet."</em>
-    </p>
+    <p class="contact-lead" set:html={renderInline(data.lead).html} />
 
     <div class="contact-grid">
-      <div class="contact-block primary">
-        <div class="contact-block-label">Direct</div>
-        <div class="contact-block-value">
-          <a href="mailto:me@eliyannah.direct">me@eliyannah.direct</a>
+      {blocks.map((block) => (
+        <div class={block.highlight ? "contact-block primary" : "contact-block"}>
+          <div class="contact-block-label" set:html={renderInline(block.label).html} />
+          {block.link
+            ? (
+              <div class="contact-block-value">
+                <a
+                  href={block.link}
+                  target={isExternal(block.link) ? "_blank" : undefined}
+                  rel={isExternal(block.link) ? "noopener" : undefined}
+                  set:html={renderInline(block.value).html}
+                />
+              </div>
+            )
+            : (
+              <div class="contact-block-value" style="font-style: italic; color: var(--ink-mid);" set:html={renderInline(block.value).html} />
+            )
+          }
+          {block.note && <div class="contact-block-note" set:html={renderInline(block.note).html} />}
         </div>
-        <div class="contact-block-note">I read every email. I answer most of them.</div>
-      </div>
-
-      <div class="contact-block">
-        <div class="contact-block-label">Representation</div>
-        <div class="contact-block-value" style="font-style: italic; color: var(--ink-mid);">
-          Currently unsigned. Warm intros welcome.
-        </div>
-        <div class="contact-block-note">Agents, managers — write to the direct line above.</div>
-      </div>
-
-      <div class="contact-block">
-        <div class="contact-block-label">Press &amp; Festivals</div>
-        <div class="contact-block-value">
-          <a href="/press">See the press kit →</a>
-        </div>
-        <div class="contact-block-note">Photos, bio, one-sheets, and interview request form.</div>
-      </div>
-
-      <div class="contact-block">
-        <div class="contact-block-label">Newsletter</div>
-        <div class="contact-block-value">
-          <a href="/forest">From the Forest →</a>
-        </div>
-        <div class="contact-block-note">Monthly. Launches May 3. Subscribe there.</div>
-      </div>
+      ))}
     </div>
 
     <div style="margin-top: 3rem;">
       <div class="press-archive-label">
-        <span>Elsewhere on the Internet</span>
-        <span class="sub">Follow / Watch / Read</span>
+        <span>{data.socialLabel}</span>
+        <span class="sub">{data.socialSub}</span>
       </div>
       <div class="social-grid">
-        <a href="https://instagram.com/eliyannahdirect" class="social-link" target="_blank" rel="noopener">
-          <span class="platform">Instagram</span>
-          <span class="handle">@eliyannahdirect</span>
-        </a>
-        <a href="https://www.youtube.com/@SunshineMoxie" class="social-link" target="_blank" rel="noopener">
-          <span class="platform">YouTube</span>
-          <span class="handle">@SunshineMoxie</span>
-        </a>
-        <a href="https://www.imdb.com/name/nm6607074/" class="social-link" target="_blank" rel="noopener">
-          <span class="platform">IMDb</span>
-          <span class="handle">Eliyannah A. Yisrael</span>
-        </a>
-        <a href="#" class="social-link">
-          <span class="platform">The Forest</span>
-          <span class="handle">forestofgodsanswers.com</span>
-        </a>
+        {socials.map((s) => (
+          s.link
+            ? (
+              <a href={s.link} class="social-link" target={isExternal(s.link) ? "_blank" : undefined} rel={isExternal(s.link) ? "noopener" : undefined}>
+                <span class="platform">{s.platform}</span>
+                <span class="handle">{s.handle}</span>
+              </a>
+            )
+            : (
+              <div class="social-link">
+                <span class="platform">{s.platform}</span>
+                <span class="handle">{s.handle}</span>
+              </div>
+            )
+        ))}
       </div>
     </div>
 
