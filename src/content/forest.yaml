@@ -104,9 +104,11 @@ branches:
     desc: The Sunshine Moxie letter. Film, television, cultural commentary.
   - type: Branch · 02
     name: '*Heirloom*'
-    status: 2026 · TBA
+    status: 2027 · TBA
     mothership: false
-    desc: A Foremother's Brand. Retail, legacy, the women the brands are named for.
+    desc: >-
+      A Foremother's Brand. Retail, legacy, the women of mine the brands are
+      named for.
   - type: Branch · 03
     name: '*The Gathering*'
     status: 2026 · TBA
