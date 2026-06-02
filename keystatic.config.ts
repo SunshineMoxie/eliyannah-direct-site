@@ -19,7 +19,7 @@ export default config({
   ui: {
     brand: { name: 'Sunshine Moxie' },
     navigation: {
-      'Landing page': ['callSheetStatus', 'pageText'],
+      'Landing page': ['callSheetStatus', 'pageText', 'heroImage'],
       Work: ['scenes'],
       Press: ['press'],
       'Craft Services': ['craft'],
@@ -184,6 +184,41 @@ export default config({
           }),
           { label: 'Panels', itemLabel: (p) => p.fields.label.value || 'Panel' }
         ),
+      },
+    }),
+
+    // First image field on the site. Stores ONE landing-page hero image, its
+    // alt text, and the two caption spans. With directory + publicPath set,
+    // Keystatic saves the ready-to-use path as the value, so the page can drop
+    // it straight into <img src>. If no image is uploaded yet, the page falls
+    // back to the existing yellow "Hero Image Slot" placeholder, so it can
+    // never render broken.
+    heroImage: singleton({
+      label: 'Hero image (landing)',
+      path: 'src/content/hero-image',
+      schema: {
+        image: fields.image({
+          label: 'Hero image',
+          description:
+            'Your strongest single still or portrait. Size it before uploading (around 1000px wide is plenty). Leave empty to keep the placeholder box showing.',
+          directory: 'public/images/hero',
+          publicPath: '/images/hero/',
+        }),
+        alt: fields.text({
+          label: 'Alt text',
+          description:
+            'A short plain-language description of the image, for screen readers and search. e.g. "Eliyannah on set in Chicago".',
+        }),
+        captionLeft: fields.text({
+          label: 'Caption · left',
+          description: 'The small mono line at the bottom-left of the frame.',
+          defaultValue: 'HERO · 01A',
+        }),
+        captionRight: fields.text({
+          label: 'Caption · right',
+          description: 'The small mono line at the bottom-right of the frame.',
+          defaultValue: '35MM / DIGITAL',
+        }),
       },
     }),
 
