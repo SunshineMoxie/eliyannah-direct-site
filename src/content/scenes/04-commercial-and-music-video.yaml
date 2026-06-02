@@ -1,28 +1,30 @@
 sceneNumber: '04'
 title: Commercial *&* Music Video
 slugline: EXT. Various — Day · Commercial & Music Video · Completed
-tagline: Mik Jacobi. bigbellyrelli. Tetris. Commissioned work that keep my eye sharp.
-synopsis: >
+tagline: >-
+  Mik Jacobi. bigbellyrelli. Tetris. Chicago Public Schools students.
+  Commissioned work that keep my eye sharp and my heart focused.
+synopsis: >-
   Music videos and commercial work, folded together because they live in the
   same part of the brain, short form, specific brief, make it feel like
-  something. The Tetris piece, *Indio*, became the Coachella theme.
+  something. 
 
 
-  The work on this scene keeps the craft muscles loose between longer projects.
-  Every frame is a rehearsal for the next feature.
+  The work on this scene keeps the craft muscles loose between longer projects. 
 actions:
   - label: Watch Reel →
     href: '#'
     primary: true
   - label: Full Project List
-    href: '#'
+    href: >-
+      https://youtube.com/playlist?list=PL0h1vG_dCKCj4PuSgPUA1M1HbojPAnsEH&si=fz2IiF2YgBo0Om02
     primary: false
 meta:
   - key: Scene
     value: '04'
   - key: Status
-    value: '*Released*'
+    value: '*Ongoing*'
   - key: Format
     value: Music Video · Commercial
   - key: Notable
-    value: Coachella "Indio" Theme
+    value: Chicago Public Schools - *Corliss* Summer Workshops
