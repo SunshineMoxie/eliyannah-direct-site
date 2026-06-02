@@ -5,12 +5,13 @@ import keystaticConfig from "../../keystatic.config";
 import { renderPanelValue } from "../lib/render-text";
 import { renderInline } from "../lib/render-prose";
 
-// Read the four status panels from the Keystatic singleton at build time.
-// If the file is ever missing or unreadable, we fall back to the known copy so
-// the landing page can never render with empty panels.
+// Read the status panels, page text, and the hero image from Keystatic at
+// build time. Every read has a hardcoded fallback so the landing page can
+// never render empty.
 const reader = createReader(process.cwd(), keystaticConfig);
 const status = await reader.singletons.callSheetStatus.read();
 const pageText = await reader.singletons.pageText.read();
+const hero = await reader.singletons.heroImage.read();
 
 const STATEMENT_FALLBACK = "I make Hood New Wave cinema for Black America. Films with the formal seriousness of Italian Neorealism and the raw subjectivity of a Drill-era music video, shot on film, for the people the films are about. My focus is the Black Midwest, the region too often left out of the story of Black America. The stories of Black America deserve high art the people who live those stories can actually watch. That is what the work is for.";
 const directorStatement = pageText?.directorStatement || STATEMENT_FALLBACK;
@@ -23,6 +24,21 @@ const FALLBACK_PANELS = [
 ];
 
 const panels = status?.panels?.length ? status.panels : FALLBACK_PANELS;
+
+// Resolve the hero image source. With publicPath set, Keystatic normally stores
+// a ready-to-use path that starts with "/". This guard also handles the case
+// where a singleton hands back a bare filename, so the <img> resolves either
+// way and we don't depend on an untested singleton path composition.
+function imageSrc(value: string | null | undefined, publicPath: string) {
+  if (!value) return null;
+  if (value.startsWith("/") || value.startsWith("http")) return value;
+  return publicPath + value;
+}
+
+const heroSrc = imageSrc(hero?.image, "/images/hero/");
+const heroAlt = hero?.alt || "Eliyannah Amirah Yisrael";
+const heroCaptionLeft = hero?.captionLeft || "HERO · 01A";
+const heroCaptionRight = hero?.captionRight || "35MM / DIGITAL";
 ---
 
 <BaseLayout
@@ -60,14 +76,22 @@ const panels = status?.panels?.length ? status.panels : FALLBACK_PANELS;
       </div>
 
       <div class="hero-image-frame">
-        <div class="hero-image-placeholder">
-          <div class="icon">01 / A</div>
-          <div class="label">Hero Image Slot</div>
-          <div class="instruction">Your strongest single still or portrait. A frame from Caterpillar, a BTS still you love, or the Sunshine Moxie photo you've always loved. One image at the top of the call sheet.</div>
-        </div>
+        {heroSrc ? (
+          <img
+            src={heroSrc}
+            alt={heroAlt}
+            style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"
+          />
+        ) : (
+          <div class="hero-image-placeholder">
+            <div class="icon">01 / A</div>
+            <div class="label">Hero Image Slot</div>
+            <div class="instruction">Your strongest single still or portrait. A frame from Caterpillar, a BTS still you love, or the Sunshine Moxie photo you've always loved. One image at the top of the call sheet.</div>
+          </div>
+        )}
         <div class="image-caption">
-          <span>HERO · 01A</span>
-          <span>35MM / DIGITAL</span>
+          <span>{heroCaptionLeft}</span>
+          <span>{heroCaptionRight}</span>
         </div>
       </div>
     </div>
