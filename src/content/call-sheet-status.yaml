@@ -1,17 +1,17 @@
 panels:
   - label: Current Production
-    value: "*The Caterpillar and The Butterfly*"
-    sub: "Feature · In Development"
+    value: '*The Caterpillar and The Butterfly*'
+    sub: Feature · In Development
     highlight: false
   - label: Status
-    value: "Actively Pitching"
-    sub: "Actors · Producers · Agents"
+    value: Actively Pitching
+    sub: Actors · Producers · Agents
     highlight: false
   - label: Based In
-    value: "Chicago & LA"
-    sub: "Will Travel For Work"
+    value: Chicago & LA
+    sub: Will Travel For Work
     highlight: false
   - label: Now On Deck
-    value: "From The *Forest*"
-    sub: "Newsletter · Launches May 3"
+    value: From The *Forest*
+    sub: Newsletter · Launched May 3
     highlight: true
