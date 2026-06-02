@@ -2,7 +2,7 @@ panels:
   - label: Current Production
     value: '*The Caterpillar and The Butterfly*'
     sub: Feature · In Development
-    highlight: false
+    highlight: true
   - label: Status
     value: Actively Pitching
     sub: Actors · Producers · Agents
@@ -13,5 +13,5 @@ panels:
     highlight: false
   - label: Now On Deck
     value: From The *Forest*
-    sub: Newsletter · Launched May 3
-    highlight: true
+    sub: Newsletter · Planted May 3
+    highlight: false
