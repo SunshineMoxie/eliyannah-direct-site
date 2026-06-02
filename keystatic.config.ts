@@ -19,7 +19,7 @@ export default config({
   ui: {
     brand: { name: 'Sunshine Moxie' },
     navigation: {
-      'Landing page': ['callSheetStatus'],
+      'Landing page': ['callSheetStatus', 'pageText'],
       Work: ['scenes'],
       Press: ['press'],
       'Craft Services': ['craft'],
@@ -184,6 +184,41 @@ export default config({
           }),
           { label: 'Panels', itemLabel: (p) => p.fields.label.value || 'Panel' }
         ),
+      },
+    }),
+
+    pageText: singleton({
+      label: 'Page headers & intros',
+      path: 'src/content/page-text',
+      schema: {
+        directorStatement: fields.text({
+          label: "Director's Statement (landing page)",
+          description: 'The paragraph under your name on the landing page. *asterisks* for emerald italic.',
+          multiline: true,
+        }),
+
+        workEyebrow: fields.text({ label: 'Work · eyebrow' }),
+        workTitle: fields.text({ label: 'Work · title', description: '*asterisks* for italic.' }),
+        workSubtitle: fields.text({ label: 'Work · subtitle', multiline: true }),
+
+        pressEyebrow: fields.text({ label: 'Press · eyebrow' }),
+        pressTitle: fields.text({ label: 'Press · title', description: '*asterisks* for italic.' }),
+        pressSubtitle: fields.text({ label: 'Press · subtitle', multiline: true }),
+        pressIntro: fields.text({ label: 'Press · intro paragraph', description: '*asterisks* for italic.', multiline: true }),
+
+        craftEyebrow: fields.text({ label: 'Craft · eyebrow' }),
+        craftTitle: fields.text({ label: 'Craft · title', description: '*asterisks* for italic.' }),
+        craftSubtitle: fields.text({ label: 'Craft · subtitle', multiline: true }),
+        craftIntro: fields.text({ label: 'Craft · intro paragraph', description: '*asterisks* for italic.', multiline: true }),
+
+        dailiesEyebrow: fields.text({ label: 'Dailies · eyebrow' }),
+        dailiesTitle: fields.text({ label: 'Dailies · title', description: '*asterisks* for italic.' }),
+        dailiesSubtitle: fields.text({ label: 'Dailies · subtitle', multiline: true }),
+        dailiesIntro: fields.text({
+          label: 'Dailies · intro paragraphs',
+          description: 'Blank line between paragraphs. *asterisks* for italic.',
+          multiline: true,
+        }),
       },
     }),
 
