@@ -6,6 +6,7 @@ import { renderInline, renderProse } from "../lib/render-prose";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const rawCraft = await reader.collections.craft.all();
+const t = await reader.singletons.pageText.read();
 
 const items = rawCraft
   .map(({ entry }) => entry)
@@ -21,15 +22,11 @@ const items = rawCraft
 
 <main class="main">
   <section class="page">
-    <div class="page-eyebrow">Section 07 · Craft Services</div>
-    <h1 class="page-title">Craft <em>Services</em></h1>
-    <p class="page-subtitle">
-      The table in the hallway. Where the crew actually meets each other.
-    </p>
+    <div class="page-eyebrow">{t?.craftEyebrow || "Section 07 · Craft Services"}</div>
+    <h1 class="page-title" set:html={renderInline(t?.craftTitle || "Craft *Services*").html} />
+    <p class="page-subtitle" set:html={renderInline(t?.craftSubtitle || "The table in the hallway. Where the crew actually meets each other.").html} />
 
-    <p style="max-width: 640px; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); margin-bottom: 2rem;">
-      On a set, craft services is where you figure out who everybody is. Here: the things outside the work that are still very much the work. The recipes. The books. The playlists. The Chicago spots. A room kept deliberately fun on a serious site.
-    </p>
+    <p style="max-width: 640px; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); margin-bottom: 2rem;" set:html={renderInline(t?.craftIntro || "On a set, craft services is where you figure out who everybody is. Here: the things outside the work that are still very much the work. The recipes. The books. The playlists. The Chicago spots. A room kept deliberately fun on a serious site.").html} />
 
     <div class="craft-menu">
       {items.map((item) => {

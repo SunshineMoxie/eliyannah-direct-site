@@ -6,6 +6,7 @@ import { renderInline, renderProse } from "../lib/render-prose";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const rawScenes = await reader.collections.scenes.all();
+const t = await reader.singletons.pageText.read();
 
 const scenes = rawScenes
   .map(({ entry }) => entry)
@@ -21,11 +22,9 @@ const scenes = rawScenes
 
 <main class="main">
   <section class="page">
-    <div class="page-eyebrow">Section 02 · Scenes</div>
-    <h1 class="page-title">The <em>Work</em></h1>
-    <p class="page-subtitle">
-      Every project is a scene. Every scene is the whole argument for what comes next.
-    </p>
+    <div class="page-eyebrow">{t?.workEyebrow || "Section 02 · Scenes"}</div>
+    <h1 class="page-title" set:html={renderInline(t?.workTitle || "The *Work*").html} />
+    <p class="page-subtitle" set:html={renderInline(t?.workSubtitle || "Every project is a scene. Every scene is the whole argument for what comes next.").html} />
 
     <div class="scenes-grid">
       {scenes.map((scene) => {

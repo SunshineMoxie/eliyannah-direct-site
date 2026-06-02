@@ -3,12 +3,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../keystatic.config";
 import { renderPanelValue } from "../lib/render-text";
+import { renderInline } from "../lib/render-prose";
 
 // Read the four status panels from the Keystatic singleton at build time.
 // If the file is ever missing or unreadable, we fall back to the known copy so
 // the landing page can never render with empty panels.
 const reader = createReader(process.cwd(), keystaticConfig);
 const status = await reader.singletons.callSheetStatus.read();
+const pageText = await reader.singletons.pageText.read();
+
+const STATEMENT_FALLBACK = "I make Hood New Wave cinema for Black America. Films with the formal seriousness of Italian Neorealism and the raw subjectivity of a Drill-era music video, shot on film, for the people the films are about. My focus is the Black Midwest, the region too often left out of the story of Black America. The stories of Black America deserve high art the people who live those stories can actually watch. That is what the work is for.";
+const directorStatement = pageText?.directorStatement || STATEMENT_FALLBACK;
 
 const FALLBACK_PANELS = [
   { label: "Current Production", value: "*The Caterpillar and The Butterfly*", sub: "Feature · In Development", highlight: false },
@@ -44,7 +49,7 @@ const panels = status?.panels?.length ? status.panels : FALLBACK_PANELS;
         <div class="call-sheet-role">A working director. A Chicago storyteller.</div>
 
         <div class="call-sheet-statement">
-          <p>I make Hood New Wave cinema for Black America. Films with the formal seriousness of Italian Neorealism and the raw subjectivity of a Drill-era music video, shot on film, for the people the films are about. My focus is the Black Midwest, the region too often left out of the story of Black America. The stories of Black America deserve high art the people who live those stories can actually watch. That is what the work is for.</p>
+          <p set:html={renderInline(directorStatement).html} />
         </div>
 
         <div class="call-sheet-cta">

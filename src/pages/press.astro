@@ -2,10 +2,12 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../keystatic.config";
+import { renderInline } from "../lib/render-prose";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const rawPress = await reader.collections.press.all();
 const clippings = rawPress.map(({ entry }) => entry);
+const t = await reader.singletons.pageText.read();
 
 // Fixed category display order. Each section only renders if it has entries.
 const CATEGORY_ORDER = ["Print", "Video", "Audio", "Appearances"];
@@ -26,15 +28,11 @@ const grouped = CATEGORY_ORDER.map((cat) => ({
 
 <main class="main">
   <section class="page">
-    <div class="page-eyebrow">Section 05 · Press</div>
-    <h1 class="page-title">The <em>Notes</em> Page</h1>
-    <p class="page-subtitle">
-      What the serious outlets have said so far.
-    </p>
+    <div class="page-eyebrow">{t?.pressEyebrow || "Section 05 · Press"}</div>
+    <h1 class="page-title" set:html={renderInline(t?.pressTitle || "The *Notes* Page").html} />
+    <p class="page-subtitle" set:html={renderInline(t?.pressSubtitle || "What the serious outlets have said so far.").html} />
 
-    <p class="press-intro">
-      Most of the press below was earned for Hermione Granger and the Quarter Life Crisis. The coverage is older than ideal. The fact that the outlets are <em>real</em>, and that their coverage was, too, is what matters. More is coming. Journalists, this page will be active again soon.
-    </p>
+    <p class="press-intro" set:html={renderInline(t?.pressIntro || "Most of the press below was earned for Hermione Granger and the Quarter Life Crisis. The coverage is older than ideal. The fact that the outlets are *real*, and that their coverage was, too, is what matters. More is coming. Journalists, this page will be active again soon.").html} />
 
     {grouped.map((group) => (
       <>
