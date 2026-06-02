@@ -4,12 +4,12 @@ panels:
     sub: Feature · In Development
     highlight: true
   - label: Status
-    value: Actively Pitching
+    value: Actively Pitching.
     sub: Actors · Producers · Agents
     highlight: false
   - label: Based In
     value: Chicago & LA
-    sub: Will Travel For Work
+    sub: Will Travel For Work ;-D
     highlight: false
   - label: Now On Deck
     value: From The *Forest*
