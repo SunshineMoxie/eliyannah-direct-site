@@ -1,21 +1,24 @@
-sceneNumber: "03"
-slugline: "INT. Studio — Day · Short Narrative · Completed"
-title: "*The Life* I Carry"
-tagline: "PROMPT: One-line tagline. Your voice."
-synopsis: |
-  PROMPT: Two- to three-sentence synopsis. What the short is. Who's in it. What it does.
+sceneNumber: '03'
+title: '*The Life* I Carry'
+slugline: INT. Studio — Day · Short Narrative · Completed
+tagline: >-
+  Alternative lifestyles, complex love, self-exploration, simple, but hard,
+  truths.
+synopsis: >-
+  A slice of life in the underground world of train hopping. An unlikely pair
+  explores love as they fall in and out of each others lives.
 actions:
-  - label: "Watch →"
-    href: "#"
+  - label: Watch →
+    href: https://youtu.be/eFcJ9ulgYRw
     primary: true
 meta:
-  - key: "Scene"
-    value: "03"
-  - key: "Status"
-    value: "*Released*"
-  - key: "Runtime"
-    value: "19:49"
-  - key: "Role"
-    value: "Director · Writer"
-  - key: "Format"
-    value: "Short Film"
+  - key: Scene
+    value: '03'
+  - key: Status
+    value: '*Released*'
+  - key: Runtime
+    value: '19:49'
+  - key: Role
+    value: Director
+  - key: Format
+    value: Digital · Short Film
