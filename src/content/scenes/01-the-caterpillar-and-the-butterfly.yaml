@@ -12,11 +12,13 @@ actions:
   - label: Open Film Site →
     href: https://www.thecaterpillarandthebutterfly.com
     primary: true
-  - label: Script (Password)
-    href: '#'
+  - label: Script
+    href: >-
+      https://workdrive.zohoexternal.com/external/04eb34995c8542c8388859ed933810b1d6015d0ceb259ff4c1d4c1f457ec6acc
     primary: false
   - label: Lookbook
-    href: '#'
+    href: >-
+      https://workdrive.zohoexternal.com/external/502b82dcaf63e579703aadf717bb1313b5415a56f9b857c8f7ea1db2ff76de25
     primary: false
 meta:
   - key: Scene
