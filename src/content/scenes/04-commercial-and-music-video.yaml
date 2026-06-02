@@ -13,12 +13,12 @@ synopsis: >-
   The work on this scene keeps the craft muscles loose between longer projects. 
 actions:
   - label: Watch Reel →
-    href: '#'
-    primary: true
+    href: https://youtu.be/Iba1usIoTG8?si=6Lulq8kCM6QuyppX
+    primary: false
   - label: Full Project List
     href: >-
       https://youtube.com/playlist?list=PL0h1vG_dCKCj4PuSgPUA1M1HbojPAnsEH&si=fz2IiF2YgBo0Om02
-    primary: false
+    primary: true
 meta:
   - key: Scene
     value: '04'
