@@ -1,13 +1,13 @@
 sceneNumber: '01'
 title: '*The Caterpillar* and *The Butterfly*'
 slugline: INT. Chicago — 2026 — Day · Feature Film · In Development
-tagline: A South Side mother and daughter. One summer. Becoming, and what it costs.
-synopsis: >
+tagline: Chicago South Side. Spring. Becoming, and what it costs.
+synopsis: >-
   Ronnie and TaLisha do not know each other. They ride the same bus on the south
   side of Chicago. Over the course of one spring, they trade places in the
   metaphor, the caterpillar and the butterfly, moving in opposite emotional
-  directions. They speak twice: once at the beginning of the journey, once at
-  the end.
+  directions. They speak twice: once at the beginning of the journey, and again
+  at the end of it.
 actions:
   - label: Open Film Site →
     href: https://www.thecaterpillarandthebutterfly.com
