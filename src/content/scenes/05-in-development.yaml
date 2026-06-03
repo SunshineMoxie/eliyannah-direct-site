@@ -1,14 +1,16 @@
-sceneNumber: "05"
-slugline: "— · Development Slate · Under Wraps"
-title: "In *Development*"
-tagline: "What's next. On the board. Not ready to talk about yet."
-synopsis: |
-  PROMPT: Optional. List one or two projects by working title, or leave this scene block as a gestured hint of slate depth. Delete it entirely if you'd rather not signal development activity publicly.
+sceneNumber: '05'
+title: In *Development*
+slugline: — · Development Slate · Under Wraps
+tagline: What's next. On the board. Not ready to talk about yet.
+synopsis: |-
+  Greektown · *Proof of Concept (client work)* · 2026
+  *The Vibrant Things* · Digital Series · 2026/2027
+  The Adventures of Sunshine & Moxie · *Digital Series* · 2026/2027
 actions: []
 meta:
-  - key: "Scene"
-    value: "05"
-  - key: "Status"
-    value: "*In Development*"
-  - key: "Details"
-    value: "TBA"
+  - key: Scene
+    value: '05'
+  - key: Status
+    value: '*In Development*'
+  - key: Details
+    value: TBA
