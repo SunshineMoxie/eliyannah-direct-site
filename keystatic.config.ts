@@ -21,6 +21,7 @@ export default config({
     navigation: {
       'Landing page': ['callSheetStatus', 'pageText', 'heroImage'],
       Work: ['scenes'],
+      'Crew / About': ['crew'],
       Press: ['press'],
       'Craft Services': ['craft'],
       'The Forest': ['forest'],
@@ -379,6 +380,89 @@ export default config({
             itemLabel: (p) => p.fields.name.value || 'Branch',
           }
         ),
+      },
+    }),
+
+    // The Crew / About page. One singleton holding the whole page: header,
+    // portrait image (second image field on the site), the above-the-line role
+    // lines, the bio, and the three lettered sections (References, Continuity,
+    // Studio history). Locked copy lives in the starter file verbatim; every
+    // page read has a hardcoded fallback so nothing renders empty.
+    crew: singleton({
+      label: 'Crew / About page',
+      path: 'src/content/crew',
+      schema: {
+        eyebrow: fields.text({ label: 'Page eyebrow', defaultValue: 'Section 03 · Crew' }),
+        title: fields.text({ label: 'Page title', description: '*asterisks* for emerald italic.', defaultValue: 'The *Crew*' }),
+        subtitle: fields.text({ label: 'Page subtitle', multiline: true }),
+
+        portrait: fields.image({
+          label: 'Portrait image',
+          description:
+            'A headshot or photo of you. Size it before uploading (around 1000px wide is plenty). Leave empty to keep the placeholder box.',
+          directory: 'public/images/portrait',
+          publicPath: '/images/portrait/',
+        }),
+        portraitAlt: fields.text({
+          label: 'Portrait alt text',
+          description: 'Short plain description for screen readers and search. e.g. "Eliyannah, director portrait".',
+        }),
+        portraitCaptionLeft: fields.text({ label: 'Portrait caption · left', defaultValue: 'PORTRAIT · 03A' }),
+        portraitCaptionRight: fields.text({ label: 'Portrait caption · right', defaultValue: 'DIRECTOR' }),
+
+        aboveLineHeading: fields.text({ label: 'Above-the-line heading', defaultValue: 'Above The Line' }),
+        union: fields.text({ label: 'Union line (right of heading)', defaultValue: 'DGA / WGA — eligible' }),
+        roles: fields.array(
+          fields.object({
+            role: fields.text({ label: 'Role' }),
+            name: fields.text({ label: 'Name', description: '*asterisks* for emerald italic.' }),
+          }),
+          { label: 'Role lines', itemLabel: (p) => p.fields.role.value || 'Role' }
+        ),
+
+        bio: fields.text({
+          label: 'Bio',
+          description:
+            'Blank line between paragraphs. *asterisks* for emerald italic (used for film and outlet titles). [text](url) for links.',
+          multiline: true,
+        }),
+
+        referencesNum: fields.text({ label: 'References · section label', defaultValue: 'Section A · References' }),
+        referencesTitle: fields.text({ label: 'References · title', description: '*asterisks* for italic.', defaultValue: 'What *shaped* the eye.' }),
+        references: fields.array(
+          fields.object({
+            category: fields.text({ label: 'Category' }),
+            items: fields.text({
+              label: 'Items',
+              description: '*asterisks* for italic. Start with "PROMPT:" for the yellow placeholder box.',
+              multiline: true,
+            }),
+          }),
+          {
+            label: 'Reference cells',
+            description: 'The grid is designed for eight. More or fewer still works.',
+            itemLabel: (p) => p.fields.category.value || 'Cell',
+          }
+        ),
+
+        continuityNum: fields.text({ label: 'Continuity · section label', defaultValue: 'Section B · Continuity' }),
+        continuityTitle: fields.text({ label: 'Continuity · title', description: '*asterisks* for italic.', defaultValue: 'What *stays the same* in every project.' }),
+        continuity: fields.array(
+          fields.text({ label: 'Through-line', multiline: true }),
+          {
+            label: 'Continuity items',
+            description: 'Numbered automatically in order (01, 02, …).',
+            itemLabel: (p) => p.value || 'Item',
+          }
+        ),
+
+        studioNum: fields.text({ label: 'Studio history · section label', defaultValue: 'Section C · Below The Line History' }),
+        studioTitle: fields.text({ label: 'Studio history · title', description: '*asterisks* for italic.', defaultValue: 'The *studio* years.' }),
+        studioBody: fields.text({
+          label: 'Studio history · body',
+          description: 'Blank line between paragraphs. *asterisks* for italic.',
+          multiline: true,
+        }),
       },
     }),
   },
