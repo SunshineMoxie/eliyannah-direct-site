@@ -1,5 +1,89 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+import { renderInline, renderProse } from "../lib/render-prose";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const crew = await reader.singletons.crew.read();
+
+// Same defensive resolver proven on the hero: handle a full path or a bare
+// filename so the <img> resolves regardless of how the singleton composes it.
+function imageSrc(value: string | null | undefined, publicPath: string) {
+  if (!value) return null;
+  if (value.startsWith("/") || value.startsWith("http")) return value;
+  return publicPath + value;
+}
+
+// Verbatim fallbacks. Locked copy lives here too so the page can never render
+// empty if the content file is missing. Asterisks mark the emerald-italic words.
+const FB = {
+  eyebrow: "Section 03 · Crew",
+  title: "The *Crew*",
+  subtitle: "Above the line, below the line, what she reads, what stays the same.",
+  portraitCaptionLeft: "PORTRAIT · 03A",
+  portraitCaptionRight: "DIRECTOR",
+  aboveLineHeading: "Above The Line",
+  union: "DGA / WGA — eligible",
+  roles: [
+    { role: "Director", name: "Eliyannah Amirah *Yisrael*" },
+    { role: "Writer", name: "Eliyannah Amirah *Yisrael*" },
+    { role: "Producer", name: "Eliyannah Amirah *Yisrael*" },
+    { role: "Creator of Record", name: "Sunshine *Moxie*" },
+  ],
+  bio: "Eliyannah Amirah Yisrael is writing and directing *The Caterpillar and The Butterfly*, her first feature. It is a Black Midwestern film about two women, strangers, who ride the same bus on the south side of Chicago, made in the cinematic tradition she calls Hood New Wave. The film is in active development with a targeted shooting date of spring 2027.\n\nShe is a Chicagoan, raised on the south side. Her sensibility was built on two essential ingredients: observation and literature. Before directing independently, she spent ten years in scripted production in Hollywood, working for studios including Sony, FOX, NBC, HBO, Lionsgate, ABC/Disney, Paramount, and Warner Brothers, assisting Sanaa Hamri on *Empire* and Julie Taymor on *The Glorias*, work that shaped how she thinks about directing. Her webseries *Hermione Granger and the Quarter Life Crisis* was covered by PBS, *Emmy* magazine, *The Los Angeles Times*, and *Elle UK*. She lives and works between Chicago and Los Angeles.",
+  referencesNum: "Section A · References",
+  referencesTitle: "What *shaped* the eye.",
+  references: [
+    { category: "Filmmakers", items: "Barry *Jenkins*, Kasi Lemmons, Cheryl Dunye, Charles Burnett, the L.A. Rebellion" },
+    { category: "Neorealism", items: "Rossellini, De Sica, *Truffaut*, Varda — the way everyday people hold the frame" },
+    { category: "Sound", items: "Kirk *Franklin*, Stevie Wonder, Chicago gospel, a song from the house" },
+    { category: "Books", items: "Sophie *Kinsella* as much as Toni Morrison. The list stays honest." },
+    { category: "Place", items: "The South Side. The West Side. The Black *Midwest* as an origin, not a stopover." },
+    { category: "On Set", items: "Every *HOD* I ever watched run a department with joy and precision." },
+    { category: "The Form", items: "Shot on film. Mise-en-scène as a discipline, not a brag." },
+    { category: "Etc.", items: "PROMPT: Add or replace any of these with your actual references." },
+  ],
+  continuityNum: "Section B · Continuity",
+  continuityTitle: "What *stays the same* in every project.",
+  continuity: [
+    "Black people are the whole of the frame. We are not a point the frame is trying to make.",
+    "Chicago is specific. The south side is specific. The Black Midwest is specific. Every city I shoot in gets the same attention I give my own.",
+    "Shot on film. Because the medium is part of the argument.",
+    "There are no limits to my Black imagination.",
+    "The audience I am working for is the audience inside the frame.",
+  ],
+  studioNum: "Section C · Below The Line History",
+  studioTitle: "The *studio* years.",
+  studioBody: "Ten years in scripted production in Hollywood — in the rooms where studio television actually gets made. Sony. FOX. NBC. HBO. Lionsgate. ABC / Disney. Paramount. Warner Brothers. Not above the line. *Adjacent* to it, running the crew-facing logistics that turn a greenlight into a show.\n\nThe résumé version is in the press kit. The useful version is the one I already carry: a working knowledge of how a studio crew actually functions, what a real budget conversation sounds like, and how producers make the decisions that shape the work before the director ever sees the set. That is the credential. It is what makes the directing serious.",
+};
+
+const eyebrow = crew?.eyebrow || FB.eyebrow;
+const title = crew?.title || FB.title;
+const subtitle = crew?.subtitle || FB.subtitle;
+
+const portraitSrc = imageSrc(crew?.portrait, "/images/portrait/");
+const portraitAlt = crew?.portraitAlt || "Eliyannah Amirah Yisrael";
+const portraitCaptionLeft = crew?.portraitCaptionLeft || FB.portraitCaptionLeft;
+const portraitCaptionRight = crew?.portraitCaptionRight || FB.portraitCaptionRight;
+
+const aboveLineHeading = crew?.aboveLineHeading || FB.aboveLineHeading;
+const union = crew?.union || FB.union;
+const roles = crew?.roles?.length ? crew.roles : FB.roles;
+
+const bio = crew?.bio || FB.bio;
+
+const referencesNum = crew?.referencesNum || FB.referencesNum;
+const referencesTitle = crew?.referencesTitle || FB.referencesTitle;
+const references = crew?.references?.length ? crew.references : FB.references;
+
+const continuityNum = crew?.continuityNum || FB.continuityNum;
+const continuityTitle = crew?.continuityTitle || FB.continuityTitle;
+const continuity = crew?.continuity?.length ? crew.continuity : FB.continuity;
+
+const studioNum = crew?.studioNum || FB.studioNum;
+const studioTitle = crew?.studioTitle || FB.studioTitle;
+const studioBody = crew?.studioBody || FB.studioBody;
 ---
 
 <BaseLayout
@@ -11,101 +95,75 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <main class="main">
   <section class="page">
-    <div class="page-eyebrow">Section 03 · Crew</div>
-    <h1 class="page-title">The <em>Crew</em></h1>
-    <p class="page-subtitle">
-      Above the line, below the line, what she reads, what stays the same.
-    </p>
+    <div class="page-eyebrow">{eyebrow}</div>
+    <h1 class="page-title" set:html={renderInline(title).html}></h1>
+    <p class="page-subtitle" set:html={renderInline(subtitle).html}></p>
 
     <div class="crew-intro">
       <div class="crew-portrait">
-        <div class="placeholder-stamp">
-          <strong>Portrait Slot</strong>
-          A headshot you actually like.<br>
-          Or a photograph you took.<br>
-          Or something unexpected.
-        </div>
+        {portraitSrc ? (
+          <img
+            src={portraitSrc}
+            alt={portraitAlt}
+            style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"
+          />
+        ) : (
+          <div class="placeholder-stamp">
+            <strong>Portrait Slot</strong>
+            A headshot you actually like.<br>
+            Or a photograph you took.<br>
+            Or something unexpected.
+          </div>
+        )}
         <div class="image-caption">
-          <span>PORTRAIT · 03A</span>
-          <span>DIRECTOR</span>
+          <span>{portraitCaptionLeft}</span>
+          <span>{portraitCaptionRight}</span>
         </div>
       </div>
 
       <div class="crew-lead">
         <div class="crew-above-line">
-          <span>Above The Line</span>
-          <span class="union">DGA / WGA — eligible</span>
+          <span>{aboveLineHeading}</span>
+          <span class="union">{union}</span>
         </div>
 
         <div class="crew-roles">
-          <div class="crew-role-line">
-            <span class="role">Director</span>
-            <span class="name">Eliyannah Amirah <em>Yisrael</em></span>
-          </div>
-          <div class="crew-role-line">
-            <span class="role">Writer</span>
-            <span class="name">Eliyannah Amirah <em>Yisrael</em></span>
-          </div>
-          <div class="crew-role-line">
-            <span class="role">Producer</span>
-            <span class="name">Eliyannah Amirah <em>Yisrael</em></span>
-          </div>
-          <div class="crew-role-line">
-            <span class="role">Creator of Record</span>
-            <span class="name">Sunshine <em>Moxie</em></span>
-          </div>
+          {roles.map((r) => (
+            <div class="crew-role-line">
+              <span class="role">{r.role}</span>
+              <span class="name" set:html={renderInline(r.name).html}></span>
+            </div>
+          ))}
         </div>
 
-        <div class="crew-bio">
-          <p>Eliyannah Amirah Yisrael is writing and directing <em>The Caterpillar and The Butterfly</em>, her first feature. It is a Black Midwestern film about two women, strangers, who ride the same bus on the south side of Chicago, made in the cinematic tradition she calls Hood New Wave. The film is in active development with a targeted shooting date of spring 2027.</p>
-          <p>She is a Chicagoan, raised on the south side. Her sensibility was built on two essential ingredients: observation and literature. Before directing independently, she spent ten years in scripted production in Hollywood, working for studios including Sony, FOX, NBC, HBO, Lionsgate, ABC/Disney, Paramount, and Warner Brothers, assisting Sanaa Hamri on <em>Empire</em> and Julie Taymor on <em>The Glorias</em>, work that shaped how she thinks about directing. Her webseries <em>Hermione Granger and the Quarter Life Crisis</em> was covered by PBS, <em>Emmy</em> magazine, <em>The Los Angeles Times</em>, and <em>Elle UK</em>. She lives and works between Chicago and Los Angeles.</p>
-        </div>
+        <div class="crew-bio" set:html={renderProse(bio).html}></div>
       </div>
     </div>
 
     <!-- References -->
     <div class="crew-section">
       <div class="crew-section-header">
-        <div class="crew-section-num">Section A · References</div>
-        <h2 class="crew-section-title">What <em>shaped</em> the eye.</h2>
+        <div class="crew-section-num">{referencesNum}</div>
+        <h2 class="crew-section-title" set:html={renderInline(referencesTitle).html}></h2>
       </div>
       <div class="crew-section-body">
         <div class="spacer"></div>
         <div class="references-list">
-          <div class="reference-cell">
-            <div class="category">Filmmakers</div>
-            <div class="items">Barry <em>Jenkins</em>, Kasi Lemmons, Cheryl Dunye, Charles Burnett, the L.A. Rebellion</div>
-          </div>
-          <div class="reference-cell">
-            <div class="category">Neorealism</div>
-            <div class="items">Rossellini, De Sica, <em>Truffaut</em>, Varda — the way everyday people hold the frame</div>
-          </div>
-          <div class="reference-cell">
-            <div class="category">Sound</div>
-            <div class="items">Kirk <em>Franklin</em>, Stevie Wonder, Chicago gospel, a song from the house</div>
-          </div>
-          <div class="reference-cell">
-            <div class="category">Books</div>
-            <div class="items">Sophie <em>Kinsella</em> as much as Toni Morrison. The list stays honest.</div>
-          </div>
-          <div class="reference-cell">
-            <div class="category">Place</div>
-            <div class="items">The South Side. The West Side. The Black <em>Midwest</em> as an origin, not a stopover.</div>
-          </div>
-          <div class="reference-cell">
-            <div class="category">On Set</div>
-            <div class="items">Every <em>HOD</em> I ever watched run a department with joy and precision.</div>
-          </div>
-          <div class="reference-cell">
-            <div class="category">The Form</div>
-            <div class="items">Shot on film. Mise-en-scène as a discipline, not a brag.</div>
-          </div>
-          <div class="reference-cell">
-            <div class="category">Etc.</div>
-            <div class="items">
-              <span class="prompt small">Add or replace any of these with your actual references.</span>
-            </div>
-          </div>
+          {references.map((cell) => {
+            const r = renderInline(cell.items);
+            return (
+              <div class="reference-cell">
+                <div class="category">{cell.category}</div>
+                <div class="items">
+                  {r.prompt ? (
+                    <span class="prompt small" set:html={r.html}></span>
+                  ) : (
+                    <span set:html={r.html}></span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -113,32 +171,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <!-- Continuity -->
     <div class="crew-section">
       <div class="crew-section-header">
-        <div class="crew-section-num">Section B · Continuity</div>
-        <h2 class="crew-section-title">What <em>stays the same</em> in every project.</h2>
+        <div class="crew-section-num">{continuityNum}</div>
+        <h2 class="crew-section-title" set:html={renderInline(continuityTitle).html}></h2>
       </div>
       <div class="crew-section-body">
         <div class="spacer"></div>
         <div class="continuity-list">
-          <div class="continuity-item">
-            <span class="num">01</span>
-            <span class="text">Black people are the whole of the frame. We are not a point the frame is trying to make.</span>
-          </div>
-          <div class="continuity-item">
-            <span class="num">02</span>
-            <span class="text">Chicago is specific. The south side is specific. The Black Midwest is specific. Every city I shoot in gets the same attention I give my own.</span>
-          </div>
-          <div class="continuity-item">
-            <span class="num">03</span>
-            <span class="text">Shot on film. Because the medium is part of the argument.</span>
-          </div>
-          <div class="continuity-item">
-            <span class="num">04</span>
-            <span class="text">There are no limits to my Black imagination.</span>
-          </div>
-          <div class="continuity-item">
-            <span class="num">05</span>
-            <span class="text">The audience I am working for is the audience inside the frame.</span>
-          </div>
+          {continuity.map((text, i) => (
+            <div class="continuity-item">
+              <span class="num">{String(i + 1).padStart(2, "0")}</span>
+              <span class="text" set:html={renderInline(text).html}></span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -146,15 +190,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <!-- Studio history -->
     <div class="crew-section">
       <div class="crew-section-header">
-        <div class="crew-section-num">Section C · Below The Line History</div>
-        <h2 class="crew-section-title">The <em>studio</em> years.</h2>
+        <div class="crew-section-num">{studioNum}</div>
+        <h2 class="crew-section-title" set:html={renderInline(studioTitle).html}></h2>
       </div>
       <div class="crew-section-body">
         <div class="spacer"></div>
-        <div>
-          <p>Ten years in scripted production in Hollywood — in the rooms where studio television actually gets made. Sony. FOX. NBC. HBO. Lionsgate. ABC / Disney. Paramount. Warner Brothers. Not above the line. <em>Adjacent</em> to it, running the crew-facing logistics that turn a greenlight into a show.</p>
-          <p>The résumé version is in the press kit. The useful version is the one I already carry: a working knowledge of how a studio crew actually functions, what a real budget conversation sounds like, and how producers make the decisions that shape the work before the director ever sees the set. That is the credential. It is what makes the directing serious.</p>
-        </div>
+        <div set:html={renderProse(studioBody).html}></div>
       </div>
     </div>
 
